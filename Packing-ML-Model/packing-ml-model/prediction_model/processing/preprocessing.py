@@ -1,23 +1,24 @@
-from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.base import BaseEstimator,TransformerMixin
 from prediction_model.config import config
 import numpy as np
 
-
-class MeanImputer(BaseEstimator, TransformerMixin):
-    def __init__(self, variables=None):
+class MeanImputer(BaseEstimator,TransformerMixin):
+    def __init__(self,variables=None):
         self.variables = variables
-
-    def fit(self, X, y=None):
+    
+    def fit(self,X,y=None):
         self.mean_dict = {}
         for col in self.variables:
             self.mean_dict[col] = X[col].mean()
         return self
     
-    def transform(self, X):
+    def transform(self,X):
         X = X.copy()
         for col in self.variables:
-            X[col].filna(self.mean_dict[col], inplace=True)
+            # X[col].fillna(self.mean_dict[col],inplace=True)
+            X[col] = X[col].fillna(self.mean_dict[col])
         return X
+
 
 class ModeImputer(BaseEstimator,TransformerMixin):
     def __init__(self,variables=None):
@@ -32,9 +33,9 @@ class ModeImputer(BaseEstimator,TransformerMixin):
     def transform(self,X):
         X = X.copy()
         for col in self.variables:
-            X[col].fillna(self.mode_dict[col],inplace=True)
+            # X[col].fillna(self.mode_dict[col],inplace=True)
+            X[col] = X[col].fillna(self.mode_dict[col])
         return X
-
 
 class DropColumns(BaseEstimator,TransformerMixin):
     def __init__(self,variables_to_drop=None):
@@ -47,7 +48,6 @@ class DropColumns(BaseEstimator,TransformerMixin):
         X = X.copy()
         X = X.drop(columns = self.variables_to_drop)
         return X
-    
 
 class DomainProcessing(BaseEstimator,TransformerMixin):
     def __init__(self,variable_to_modify = None, variable_to_add = None):

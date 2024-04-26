@@ -61,3 +61,31 @@ prediction_model
     ├── pytest.ini
     └── test_prediction.py
 ```
+
+## Training the Model
+
+To train the model, run the following command:
+
+```bash
+python training_pipeline.py
+```
+
+Upon successful completion of the training, you will receive a confirmation message:
+
+```bash
+Model has been saved under the name classification.pkl
+```
+
+## Testing the test cases
+
+I used pytest module to test my model!
+
+```bash
+pytest
+```
+
+Expected output:
+
+```bash
+=================================== 3 passed in 1.54s ===================================
+```
